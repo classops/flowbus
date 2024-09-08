@@ -1,0 +1,55 @@
+//低于8.0
+//tasks.register('sourcesJar', Jar) {
+//    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+//    archiveClassifier = 'sources'
+//    from android.sourceSets.main.java.srcDirs
+//}
+
+android {
+    publishing {
+        singleVariant('release') {
+            withSourcesJar()
+            withJavadocJar()
+        }
+    }
+}
+
+publishing {
+    publications {
+        release(MavenPublication) {
+
+            pom {
+                name = project.name
+                description = project.description
+                url = 'https://github.com/classops/flowbus'
+
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id = 'classops'
+                        name = 'classops'
+                        email = 'classops@163.com'
+                    }
+                }
+
+                // scm
+                scm {
+                    connection = 'https://github.com/classops/flowbus.git'
+                    developerConnection = 'https://github.com/classops/flowbus.git'
+                    url = 'https://github.com/classops/flowbus'
+                }
+            }
+
+            afterEvaluate {
+                from components.release
+            }
+        }
+    }
+
+}
